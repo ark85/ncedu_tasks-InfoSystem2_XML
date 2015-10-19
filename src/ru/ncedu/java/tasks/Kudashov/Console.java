@@ -1,5 +1,7 @@
 package ru.ncedu.java.tasks.Kudashov;
 
+import java.util.Scanner;
+
 import org.w3c.dom.Element;
 
 /**
@@ -14,9 +16,9 @@ public interface Console {
 	public void startInfo();
 	
 	/*
-	 *Reading and parse inform. from Console
+	 *Reading and parse inform. from console
 	 */
-	public void readAndParse();
+	public String[] readAndParse(Scanner scanner);
 	
 	public void printingElements(Element[] elements);
 }
