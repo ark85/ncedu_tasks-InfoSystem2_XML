@@ -9,6 +9,7 @@ import org.w3c.dom.Element;
  * @author Arkadiy Kudashov
  */
 
+ 
 public interface Console {
 	//For know without description
 	
