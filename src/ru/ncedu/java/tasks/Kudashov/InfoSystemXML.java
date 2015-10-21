@@ -52,6 +52,8 @@ public interface InfoSystemXML {
 	
 	//Usability issue. All previous methods do not require id for the object, and this method does. Is it normal?
 	//Typically what we do in database is "DELETE FROM OBJECTS WHERE NAME="somename""
+	//Also I don't get why are we supposed to return object which is already removed?
+	//Typical behavior is to return "true/false" result of operation. But this can be discussed.
 	
 	/**
 	 * Deleting of an object
