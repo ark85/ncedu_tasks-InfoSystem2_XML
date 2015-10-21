@@ -1,4 +1,5 @@
 package ru.ncedu.java.tasks.Kudashov;
+//Exclude binary files from version control system, please.
 
 import org.w3c.dom.Element;
 
@@ -48,6 +49,9 @@ public interface InfoSystemXML {
 	 */
 	
 	public Element[] add(String strWithAttr);
+	
+	//Usability issue. All previous methods do not require id for the object, and this method does. Is it normal?
+	//Typically what we do in database is "DELETE FROM OBJECTS WHERE NAME="somename""
 	
 	/**
 	 * Deleting of an object
