@@ -1,4 +1,6 @@
-package ru.ncedu.java.tasks.Kudashov;
+package ru.ncedu.java.tasks.kudashov;
+
+import java.util.Scanner;
 
 import org.w3c.dom.Element;
 
@@ -11,9 +13,10 @@ public class ConsoleImpl implements Console{
 	}
 
 	@Override
-	public void readAndParse() {
-		// TODO Auto-generated method stub
+	public String[] readAndParse(Scanner scanner) {
 		
+		
+		return null;
 	}
 
 	@Override

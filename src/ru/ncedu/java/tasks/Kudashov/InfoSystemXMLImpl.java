@@ -1,4 +1,4 @@
-package ru.ncedu.java.tasks.Kudashov;
+package ru.ncedu.java.tasks.kudashov;
 
 import org.w3c.dom.Element;
 

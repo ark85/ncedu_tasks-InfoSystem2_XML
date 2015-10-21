@@ -1,4 +1,4 @@
-package ru.ncedu.java.tasks.Kudashov;
+package ru.ncedu.java.tasks.kudashov;
 
 public class TestInfoSystem {
 
