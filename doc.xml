@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<emp>
+	<employee deptno="10" empno="7369">
+		<firstname>Ivan</firstname>
+		<lastname>Ivanushkin</lastname>
+		<job>Salerman</job>
+		<salary>5000</salary>
+		<phone>89196714129</phone>
+	</employee>
+</emp>
