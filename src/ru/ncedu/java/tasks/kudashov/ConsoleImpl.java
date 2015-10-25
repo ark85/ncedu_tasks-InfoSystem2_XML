@@ -11,7 +11,13 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 public class ConsoleImpl implements Console{
-
+	
+	InfoSystemXML isx;
+	String title = null;
+	
+	public ConsoleImpl(Document document) {
+		isx = new InfoSystemXMLImpl(document);
+	}
 	@Override
 	public void startInfo(Document src) {
 		// TODO Auto-generated method stub
@@ -19,43 +25,76 @@ public class ConsoleImpl implements Console{
 		Node node = nodeList.item(0);
 		NodeList chNode = node.getChildNodes();
 		NamedNodeMap nnm = nodeList.item(0).getAttributes();
-		System.out.println(nnm.item(0).getNodeName() + " | " + nnm.item(1).getNodeName() + "    | " +
+		title = nnm.item(1).getNodeName() + "     | " + nnm.item(0).getNodeName() + " | " +
 				chNode.item(1).getNodeName() + " |    " + chNode.item(3).getNodeName() + "   |    " +
 				chNode.item(5).getNodeName() + "    | " + chNode.item(7).getNodeName() + " | " +
-				chNode.item(9).getNodeName());
+				chNode.item(9).getNodeName();
+		System.out.println(title);
 		for (int i = 0; i < nodeList.getLength(); i++) {
 			Node n = nodeList.item(i);
-			NodeList chN = n.getChildNodes();
-			NamedNodeMap nNM = n.getAttributes();
-			System.out.format(" %.6s | %.5s | %.9s | %.13s | %.9s | %.6s | %.11s %n", 
-					nNM.item(0).getTextContent() + "   ", nNM.item(1).getTextContent() + "   ",
-					chN.item(1).getTextContent() + "       ", chN.item(3).getTextContent() + "       ",
-					chN.item(5).getTextContent() + "        ", chN.item(7).getTextContent() + "   ",
-					chN.item(9).getTextContent() + "   ");
+			printNode(n);
 		}
 		System.out.println("\nActions:");
 		System.out.println("find <string_for_search>");
 		System.out.println("edit <id> <string_with_new_parameters>");
 		System.out.println("add <string_with_parameters>");
 		System.out.println("delete <id>");
+		System.out.println("Write 'exit' to exit");
 	}
 
 	@Override
-	public String[] readAndParse(String str) {
+	public void readAndPrint(String str) {
+		String[] strs = str.split(" ");
+		if (strs[0].equals("find")) {
+			Element[] lastFind;
+			if (strs.length == 1) {
+				lastFind = isx.find(null);
+			}
+			else {
+				String[] help = new String[strs.length - 1];
+				for (int i = 1; i < strs.length; i++) {
+					help[i - 1] = strs[i];
+				}
+				lastFind = isx.find(help);
+			}
+			if (lastFind == null) {
+				System.out.println("Something wrong!");
+			}
+			else {
+				isx.setLastFind(lastFind);
+				System.out.println(title);
+				for (int i = 0; i < lastFind.length; i++) {
+					printNode((Node) lastFind[i]);
+				}
+			}
+		}
 		
+		if (strs[0].equals("add")) {
+			Element[] lastFind = isx.add(strs);
+			System.out.println(title);
+			if (lastFind == null) {
+				return;
+			}
+			else {
+				for (int i = 0; i < lastFind.length; i++) {
+					printNode((Node) lastFind[i]);
+				}
+			}
+		}
 		
-		return null;
-	}
-
-	@Override
-	public void printingElements(Element[] elements) {
-		// TODO Auto-generated method stub
+		if (strs[0].equals("delete")) {
+			isx.delete(strs[1]);
+		}
 		
+		if (strs[0].equals("edit")) {
+			isx.edit(strs);
+		}
 	}
 	
-	public void start(Document src, InputStream in) {
+	public void start(InputStream in, String pathDoc) {
 		// TODO Auto-generated method stub
-		startInfo(src);
+		isx.setPathDoc(pathDoc);
+		startInfo(isx.getDoc());
 		Scanner scanner = new Scanner(in);
 		while(true) {
 			String str = "";
@@ -63,8 +102,20 @@ public class ConsoleImpl implements Console{
 			if (str.equals("exit")) {
 				return;
 			}
-			
+			else {
+				readAndPrint(str);
+			}
 			
 		}
+	}
+	
+	public void printNode(Node n) {
+		NodeList chN = n.getChildNodes();
+		NamedNodeMap nNM = n.getAttributes();
+		System.out.format(" %.5s | %.6s | %.9s | %.13s | %.9s | %.6s | %.11s %n", 
+				nNM.item(1).getTextContent() + "   ", nNM.item(0).getTextContent() + "     ",
+				chN.item(1).getTextContent() + "       ", chN.item(3).getTextContent() + "       ",
+				chN.item(5).getTextContent() + "        ", chN.item(7).getTextContent() + "   ",
+				chN.item(9).getTextContent() + "   ");
 	}
 }

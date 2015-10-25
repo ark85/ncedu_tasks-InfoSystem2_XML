@@ -1,17 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <emp>
-	<employee deptno = "10" id="7369" type="id">
-		<firstname>Ivan</firstname>
-		<lastname>Ivanushkin</lastname>
-		<job>Salerman</job>
-		<salary>5000</salary>
-		<phone>89196714129</phone>
-	</employee>
 	<employee deptno="10" id="7369" type="id">
 		<firstname>Anatoliy</firstname>
 		<lastname>Levyev</lastname>
 		<job>Clerk</job>
 		<salary>10000</salary>
 		<phone>89115614129</phone>
+	</employee>
+	<employee deptno="12" id="1100" type="id">
+		<firstname>Vladimir</firstname>
+		<lastname>Smirnov</lastname>
+		<job>Clerk</job>
+		<salary>20000</salary>
+		<phone>89452164738</phone>
+	</employee>
+	<employee deptno="10" id="7369" type="id">
+		<firstname>Ivan</firstname>
+		<lastname>Ivanushkin</lastname>
+		<job>Salerman</job>
+		<salary>5000</salary>
+		<phone>89196714129</phone>
 	</employee>
 </emp>
