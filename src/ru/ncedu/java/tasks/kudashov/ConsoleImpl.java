@@ -19,23 +19,29 @@ public class ConsoleImpl implements Console{
 		Node node = nodeList.item(0);
 		NodeList chNode = node.getChildNodes();
 		NamedNodeMap nnm = nodeList.item(0).getAttributes();
-		System.out.println(nnm.item(0).getNodeName() + " | " + nnm.item(1).getNodeName() + " | " +
-				chNode.item(1).getNodeName() + " |    " + chNode.item(3).getNodeName() + "   | " +
-				chNode.item(5).getNodeName() + " | " + chNode.item(7).getNodeName() + " | " +
+		System.out.println(nnm.item(0).getNodeName() + " | " + nnm.item(1).getNodeName() + "    | " +
+				chNode.item(1).getNodeName() + " |    " + chNode.item(3).getNodeName() + "   |    " +
+				chNode.item(5).getNodeName() + "    | " + chNode.item(7).getNodeName() + " | " +
 				chNode.item(9).getNodeName());
 		for (int i = 0; i < nodeList.getLength(); i++) {
 			Node n = nodeList.item(i);
 			NodeList chN = n.getChildNodes();
-			NamedNodeMap nNM = nodeList.item(i).getAttributes();
-			System.out.println(nnm.item(0).getTextContent() + " | " + nnm.item(1).getNodeName() + " | " +
-					chNode.item(1).getNodeName() + " |    " + chNode.item(3).getNodeName() + "   | " +
-					chNode.item(5).getNodeName() + " | " + chNode.item(7).getNodeName() + " | " +
-					chNode.item(9).getNodeName());
+			NamedNodeMap nNM = n.getAttributes();
+			System.out.format(" %.6s | %.5s | %.9s | %.13s | %.9s | %.6s | %.11s %n", 
+					nNM.item(0).getTextContent() + "   ", nNM.item(1).getTextContent() + "   ",
+					chN.item(1).getTextContent() + "       ", chN.item(3).getTextContent() + "       ",
+					chN.item(5).getTextContent() + "        ", chN.item(7).getTextContent() + "   ",
+					chN.item(9).getTextContent() + "   ");
 		}
+		System.out.println("\nActions:");
+		System.out.println("find <string_for_search>");
+		System.out.println("edit <id> <string_with_new_parameters>");
+		System.out.println("add <string_with_parameters>");
+		System.out.println("delete <id>");
 	}
 
 	@Override
-	public String[] readAndParse(Scanner scanner) {
+	public String[] readAndParse(String str) {
 		
 		
 		return null;
@@ -57,6 +63,8 @@ public class ConsoleImpl implements Console{
 			if (str.equals("exit")) {
 				return;
 			}
+			
+			
 		}
 	}
 }

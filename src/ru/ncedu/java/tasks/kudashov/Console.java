@@ -20,7 +20,7 @@ public interface Console {
 	/*
 	 *Reading and parse inform. from console
 	 */
-	public String[] readAndParse(Scanner scanner);
+	public String[] readAndParse(String str);
 	
 	public void printingElements(Element[] elements);
 

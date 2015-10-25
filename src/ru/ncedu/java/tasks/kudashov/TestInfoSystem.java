@@ -24,7 +24,6 @@ public class TestInfoSystem {
 		Document document = builder.newDocument();
 		document = builder.parse(file);
 		cons.start(document, System.in);
-		
 	}
 
 }
