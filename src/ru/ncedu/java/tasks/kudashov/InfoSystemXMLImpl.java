@@ -29,8 +29,10 @@ public class InfoSystemXMLImpl implements InfoSystemXML{
 	@Override
 	public Element[] find(String[] strForSearch) {
 		// TODO Auto-generated method stub
-		lastF = new String[strForSearch.length];
-		lastF = strForSearch;
+		if( strForSearch != null) {
+			lastF = new String[strForSearch.length];
+			lastF = strForSearch;
+		}
 		NodeList nodeList = doc.getElementsByTagName("employee");
 		String[] s = strForSearch;
 		if(s == null || (s.length == 1 && strForSearch[0].equals("*"))) {
@@ -147,7 +149,36 @@ public class InfoSystemXMLImpl implements InfoSystemXML{
 	@Override
 	public Element[] delete(String id) {
 		// TODO Auto-generated method stub
-		return null;
+		NodeList nodes = doc.getElementsByTagName("employee");
+		for (int i = 0; i < nodes.getLength(); i++) {
+			Node node = nodes.item(i);
+			if (node.getNodeType() == Node.ELEMENT_NODE) {
+				Element emp = (Element) node;
+				String idEmp =  emp.getAttribute("id");
+				if (idEmp.equals(id)) {
+					emp.getParentNode().removeChild(emp);
+				}
+			}
+		}
+		TransformerFactory transformerFactory = TransformerFactory.newInstance();
+		Transformer transformer = null;
+	    try {
+			transformer = transformerFactory.newTransformer();
+		} catch (TransformerConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	    DOMSource source = new DOMSource(doc);
+	    StreamResult result = new StreamResult(pathDoc);
+	    try {
+			transformer.transform(source, result);
+		} catch (TransformerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	    
+	    Element[] elem = find(lastF);
+	    return elem;
 	}
 	
 	public Document getDoc() {
