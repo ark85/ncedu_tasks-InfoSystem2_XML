@@ -29,5 +29,5 @@ public class TestInfoSystem {
 
 
 //1100 12 Vladimir Smirnov Clerk 20000 89452164738
-// 7369 10 Ivan Ivanushkin Salerman 5000 89196714129 
-//7369 10 Anatoliy Levyev Clerk 10000 89115614129 
+// 7369 10 Ivan Ivanushkin Salerman 5000 89196714129
+//7269 10 Anatoliy Levyev Clerk 10000 89115614129

@@ -1,7 +1,10 @@
 package ru.ncedu.java.tasks.kudashov;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerConfigurationException;
@@ -21,9 +24,22 @@ public class InfoSystemXMLImpl implements InfoSystemXML{
 	Element[] lastFind = null;
 	String[] lastF = {"*"};
 	String pathDoc = null;
+	static Set<Integer> ids;
 	
+	
+	static {
+		ids = new HashSet<Integer>();
+		for (int i = 1; i < 9999; i++) {
+			ids.add(i);
+		}
+	}
 	public InfoSystemXMLImpl(Document document) {
 		doc = document;
+		NodeList nodeList = doc.getElementsByTagName("employee");
+		for (int i = 0; i < nodeList.getLength(); i++) {
+			Element n = (Element) nodeList.item(i);
+			ids.remove(Integer.parseInt(n.getAttribute("id")));
+		}
 	}
 	
 	@Override
@@ -80,8 +96,60 @@ public class InfoSystemXMLImpl implements InfoSystemXML{
 	@Override
 	public Element[] edit(String[] strWithAttr) {
 		// TODO Auto-generated method stub
-		
-		return null;
+		String[] s = strWithAttr;
+		NodeList nodes = doc.getElementsByTagName("employee");
+		for (int i = 0; i < nodes.getLength(); i++) {
+			Node node = nodes.item(i);
+			if (node.getNodeType() == Node.ELEMENT_NODE) {
+				Element emp = (Element) node;
+				String idEmp =  emp.getAttribute("id");
+				if (idEmp.equals(s[1])) {
+					if (s[2].equals("null") == false) {
+						emp.setAttribute("deptno", s[2]);
+					}
+					emp.setAttribute("type", "id");
+					NodeList fn = emp.getElementsByTagName("firstname");
+					NodeList ln = emp.getElementsByTagName("lastname");
+					NodeList job = emp.getElementsByTagName("job");
+					NodeList sal = emp.getElementsByTagName("salary");
+					NodeList ph = emp.getElementsByTagName("phone");
+					if (s[3].equals("null") == false) {
+						fn.item(0).setTextContent(s[3]);
+					}
+					if (s[4].equals("null") == false) {
+						ln.item(0).setTextContent(s[4]);
+					}
+					if (s[5].equals("null") == false) {
+						job.item(0).setTextContent(s[5]);
+					}
+					if (s[6].equals("null") == false) {
+						sal.item(0).setTextContent(s[6]);
+					}		
+					if (s[7].equals("null") == false) {
+						ph.item(0).setTextContent(s[7]);
+					}		
+				}
+			}
+		}
+		TransformerFactory transformerFactory = TransformerFactory.newInstance();
+		Transformer transformer = null;
+	    try {
+			transformer = transformerFactory.newTransformer();
+		} catch (TransformerConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	    DOMSource source = new DOMSource(doc);
+	    StreamResult result = new StreamResult(pathDoc);
+	    try {
+			transformer.transform(source, result);
+		} catch (TransformerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	    
+	    Element[] elem = find(lastF);
+	    return elem;
 	}
 
 	@Override
@@ -114,14 +182,17 @@ public class InfoSystemXMLImpl implements InfoSystemXML{
 		n.appendChild(nTab.cloneNode(false));
 		el.appendChild(nl);
 		try {
-			n.setAttribute("id", s[1]);
-			n.setAttribute("deptno", s[2]);
+			Iterator it = ids.iterator();
+			Integer i = (Integer) it.next();
+			n.setAttribute("id", i.toString());
+			ids.remove(i);
+			n.setAttribute("deptno", s[1]);
 			n.setAttribute("type", "id");
-			fn.setTextContent(s[3]);
-			ln.setTextContent(s[4]);
-			job.setTextContent(s[5]);
-			salary.setTextContent(s[6]);
-			ph.setTextContent(s[7]);
+			fn.setTextContent(s[2]);
+			ln.setTextContent(s[3]);
+			job.setTextContent(s[4]);
+			salary.setTextContent(s[5]);
+			ph.setTextContent(s[6]);
 		} catch (ArrayIndexOutOfBoundsException e) {
 			System.out.println("Not enough parameters");
 			return null;
@@ -156,7 +227,11 @@ public class InfoSystemXMLImpl implements InfoSystemXML{
 				Element emp = (Element) node;
 				String idEmp =  emp.getAttribute("id");
 				if (idEmp.equals(id)) {
+					Node tab = emp.getNextSibling();
 					emp.getParentNode().removeChild(emp);
+					tab.getParentNode().removeChild(tab);
+					Integer integer =  Integer.parseInt(idEmp);
+					ids.add(integer);
 				}
 			}
 		}

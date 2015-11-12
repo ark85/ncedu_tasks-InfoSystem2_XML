@@ -83,11 +83,29 @@ public class ConsoleImpl implements Console{
 		}
 		
 		if (strs[0].equals("delete")) {
-			isx.delete(strs[1]);
+			Element[] lastFind = isx.delete(strs[1]);
+			System.out.println(title);
+			if (lastFind == null) {
+				return;
+			}
+			else {
+				for (int i = 0; i < lastFind.length; i++) {
+					printNode((Node) lastFind[i]);
+				}
+			}
 		}
 		
 		if (strs[0].equals("edit")) {
-			isx.edit(strs);
+			Element[] lastFind = isx.edit(strs);
+			System.out.println(title);
+			if (lastFind == null) {
+				return;
+			}
+			else {
+				for (int i = 0; i < lastFind.length; i++) {
+					printNode((Node) lastFind[i]);
+				}
+			}
 		}
 	}
 	
@@ -112,7 +130,7 @@ public class ConsoleImpl implements Console{
 	public void printNode(Node n) {
 		NodeList chN = n.getChildNodes();
 		NamedNodeMap nNM = n.getAttributes();
-		System.out.format(" %.5s | %.6s | %.9s | %.13s | %.9s | %.6s | %.11s %n", 
+		System.out.format(" %.5s  | %.6s | %.9s | %.13s | %.9s | %.6s | %.11s %n", 
 				nNM.item(1).getTextContent() + "   ", nNM.item(0).getTextContent() + "     ",
 				chN.item(1).getTextContent() + "       ", chN.item(3).getTextContent() + "       ",
 				chN.item(5).getTextContent() + "        ", chN.item(7).getTextContent() + "   ",
